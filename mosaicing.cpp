@@ -6,8 +6,8 @@ int main() {
 
 	// Read in two images and display them on screen
 	
-	cv::Mat image1 = cv::imread("../../image1.jpg");
-	cv::Mat image2 = cv::imread("../../image2.jpg");
+	cv::Mat image1 = cv::imread("../image1.jpg");
+	cv::Mat image2 = cv::imread("../image2.jpg");
 
 	cv::namedWindow("Display 1");
 	cv::namedWindow("Display 2");
@@ -18,7 +18,7 @@ int main() {
 
 	// Detect SIFT features in the two images
 	
-	//cv::Ptr<cv::FeatureDetector> detector = cv::xfeatures2d::SIFT::create();
+	// cv::Ptr<cv::FeatureDetector> detector = cv::features2d::SIFT::create();
 	cv::Ptr<cv::FeatureDetector> detector = cv::SIFT::create();
 
 	std::vector<cv::KeyPoint> keypoints1, keypoints2;
