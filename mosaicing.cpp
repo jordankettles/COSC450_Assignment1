@@ -1,37 +1,51 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/xfeatures2d.hpp>
 #include "Timer.h"
+#include "cmath"
 
-cv::Mat getTestImage1(int option) {
+double RSS(std::vector<cv::Point2f> sourcePoints, cv::Mat estH, cv::Mat trueH) {
+	std::vector<cv::Point2f> estPoints, truePoints;
+	cv::perspectiveTransform(sourcePoints, estPoints, estH);
+	cv::perspectiveTransform(sourcePoints, truePoints, trueH);
+	double rss;
+	for (int i = 0; i < sourcePoints.size(); i++) {
+		rss += pow(cv::norm(estPoints[i] - truePoints[i]), 2);
+	}
+	return rss;
+}
+
+cv::Mat imageGenerator(cv::Mat img1, cv::Mat H) {
+	cv::Mat img2(img1.rows, img1.cols, CV_8UC3);
+	cv::warpPerspective(img1, img2, H, img2.size(), cv::INTER_LINEAR, cv::BORDER_TRANSPARENT);
+	return img2;
+}
+
+cv::Mat getTestImage(int option) {
 	cv::Mat returnImage;
+	//Image given in example folder.
 	if (option == 1) {
-		returnImage = cv::imread("../images/v_abstract/1.ppm");
+		returnImage = cv::imread("../image1.jpg");
 	}
 	return returnImage;
 }
 
-cv::Mat getTestImage2(int option) {
-	cv::Mat returnImage;
-	if (option == 1) {
-		returnImage = cv::imread("../images/v_abstract/2.ppm");
-	}
-	return returnImage;
-}
+/**
+ * Don't make the step larger than the size of the first image.
+ */
+cv::Mat generateHomography(int rows, int cols, int step) {
+	srand(time(0));
+	std::vector<cv::Point2f> points, warpedPoints;
+	points.push_back(cv::Point2f(0, 0));
+	points.push_back(cv::Point2f(0, cols));
+	points.push_back(cv::Point2f(rows, 0));
+	points.push_back(cv::Point2f(rows, cols));
+	warpedPoints.push_back(cv::Point2f(0 + (rand() % step), 0 + (rand() % step)));
+	warpedPoints.push_back(cv::Point2f(0 + (rand() % step), cols - (rand() % step)));
+	warpedPoints.push_back(cv::Point2f(rows - (rand() % step) , 0 + (rand() % step)));
+	warpedPoints.push_back(cv::Point2f(rows - (rand() % step), cols - (rand() % step)));
 
-cv::Mat getTrueH(int option) {
-	cv::Mat returnH(3, 3, CV_64F);
-	if (option == 1) {
-		returnH.at<double>(0, 0) = 0.7088;
-		returnH.at<double>(0, 1) = -0.010965;
-		returnH.at<double>(0, 2) = -26.07;
-		returnH.at<double>(1, 0) = -0.13602;
-		returnH.at<double>(1, 1) = 0.83489;
-		returnH.at<double>(1, 2) = 103.19;
-		returnH.at<double>(2, 0) = -0.00023352;
-		returnH.at<double>(2, 1) = -1.5615e-05;
-		returnH.at<double>(2, 2) = 1.0004;
-	}
-	return returnH;
+	cv::Mat H = cv::getPerspectiveTransform(points, warpedPoints, cv::INTER_LINEAR);
+	return H.inv();
 }
 
 cv::Mat directLinearTransform(
@@ -76,10 +90,7 @@ cv::Mat directLinearTransform(
 		return h3;
 }
 
-cv::Mat normalisedDLT(
-	std::vector<cv::Point2f> sourcePoints, 
-	std::vector<cv::Point2f> destPoints,
-	std::vector<unsigned char> inliers) {		
+cv::Mat normalisedDLT(std::vector<cv::Point2f> sourcePoints, std::vector<cv::Point2f> destPoints, std::vector<unsigned char> inliers) {
 		//Average Points.
 		cv::Point2f avSource, avDest;
 		
@@ -165,6 +176,10 @@ cv::Mat normalisedDLT(
 		return Tprime.inv() * HTilde * T;
 }
 
+void RANSAC(std::vector<cv::Point2f> sourcePoints, std::vector<cv::Point2f> destPoints,	std::vector<unsigned char> inliers) {
+		std::cout << "hello" << std::endl;
+}
+
 int main() {
 
 	int testOption = 1;
@@ -177,10 +192,10 @@ int main() {
 
 	// Abstract Image
 	// MIT License
-	cv::Mat image1 = getTestImage1(testOption);
-	cv::Mat image2 = getTestImage2(testOption);
-
-	cv::Mat trueH = getTrueH(testOption);
+	
+	cv::Mat image1 = cv::imread("../image1.jpg");
+	cv::Mat trueH = generateHomography(image1.rows, image1.cols, 250);
+	cv::Mat image2 = imageGenerator(image1, trueH);
 
 
 	cv::namedWindow("Display 1");
@@ -220,42 +235,9 @@ int main() {
 			goodPoints2.push_back(keypoints2[match[0].trainIdx].pt);
 		}
 	}
-
-	// Test points.
-	// std::vector<cv::Point2f> source, destination;
-
-	// source.push_back(cv::Point2f(0, 0));
-	// source.push_back(cv::Point2f(0, 1));
-	// source.push_back(cv::Point2f(1, 0));
-	// source.push_back(cv::Point2f(1, 1));
-
-	// cv::Mat trueHtrans(3, 3, CV_64F);
-	// trueHtrans.at<double>(0, 0) = 1;
-	// trueHtrans.at<double>(0, 1) = 0;
-	// trueHtrans.at<double>(0, 2) = 4; // delta u
-	// trueHtrans.at<double>(1, 0) = 0;
-	// trueHtrans.at<double>(1, 1) = 1;
-	// trueHtrans.at<double>(1, 2) = 5; // delta v
-	// trueHtrans.at<double>(2, 0) = 0;
-	// trueHtrans.at<double>(2, 1) = 0;
-	// trueHtrans.at<double>(2, 2) = 1;
-
-	// cv::Mat trueHrotate(3, 3, CV_64F);
-	// trueHrotate.at<double>(0, 0) = std::cos(45); // cos 45
-	// trueHrotate.at<double>(0, 1) = -std::sin(45); // -sin 45
-	// trueHrotate.at<double>(0, 2) = 0;
-	// trueHrotate.at<double>(1, 0) = std::sin(45); // sin 45
-	// trueHrotate.at<double>(1, 1) = std::cos(45); // cos 45
-	// trueHrotate.at<double>(1, 2) = 0;
-	// trueHrotate.at<double>(2, 0) = 0;
-	// trueHrotate.at<double>(2, 1) = 0;
-	// trueHrotate.at<double>(2, 2) = 1;
-
-	// cv::Mat trueH = trueHtrans * trueHrotate;
-
 	// cv::perspectiveTransform(source, destination, trueH);
 
-	std::cout << "trueH = " << trueH << std::endl;
+	std::cout << "trueH = " << std::endl;
 
 	// Compute the homgraphy
 
@@ -270,18 +252,13 @@ int main() {
 
 	// cv::Mat H = directLinearTransform(goodPoints2, goodPoints1, inliers); //image calculation
 	// cv::Mat H = directLinearTransform(source, destination, inliers); // My testing calculation
-
-	// cv::Mat H = normalisedDLT(source, destination, inliers);
 	cv::Mat H = normalisedDLT(goodPoints2, goodPoints1, inliers);
 
 	double elapsedTime = timer.read();
-	// We know there is always a 1 in the 3,3 position of the matrix.
-	std::cout << "H / k = " << H / H.at<double>(2, 2) << std::endl;
+	std::cout << "Residual Square Error " << RSS(goodPoints2, H, trueH) << std::endl;
 	std::cout << "Homography estimation took " << elapsedTime << " seconds" << std::endl;
 
 	// Figure out the extent of the final mosaic
-
-	// TODO uncomment below.
 
 	std::vector<cv::Point2d> corners;
 	corners.push_back(cv::Point2d(0, 0));

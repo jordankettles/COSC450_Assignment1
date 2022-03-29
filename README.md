@@ -2,8 +2,8 @@ COSC450_Assignment1
 
 # TODO
 1. Implement DLT: Done.
-2. Implement Normalised DLT
-3. Implement RANSAC.
+2. Implement Normalised DLT: Done
+3. Implement RANSAC:
 4. Test how long variants of my method take to find a solution.
 5. Test how many inlier correspondences are found in the RANSAC process with each variant.
 6. Test how iterations does the RANSAC process need to find a good solution, and how many does this differ among the variants.
@@ -12,4 +12,3 @@ The last point is key because to measure this I need to find or construct image 
 
 I should cacluate the an error that is geometrically significant between the two homographies.
 I should use multiple images.
-https://github.com/hpatches/hpatches-dataset
