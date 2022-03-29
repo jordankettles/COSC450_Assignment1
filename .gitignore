@@ -1,6 +1,10 @@
 # Prerequisites
 *.d
 
+#for now, ignore all the images.
+/images/*
+450-Assignment1-2022.pdf
+
 # Build Folder
 /build/*
 

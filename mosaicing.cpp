@@ -2,12 +2,186 @@
 #include <opencv2/xfeatures2d.hpp>
 #include "Timer.h"
 
+cv::Mat getTestImage1(int option) {
+	cv::Mat returnImage;
+	if (option == 1) {
+		returnImage = cv::imread("../images/v_abstract/1.ppm");
+	}
+	return returnImage;
+}
+
+cv::Mat getTestImage2(int option) {
+	cv::Mat returnImage;
+	if (option == 1) {
+		returnImage = cv::imread("../images/v_abstract/2.ppm");
+	}
+	return returnImage;
+}
+
+cv::Mat getTrueH(int option) {
+	cv::Mat returnH(3, 3, CV_64F);
+	if (option == 1) {
+		returnH.at<double>(0, 0) = 0.7088;
+		returnH.at<double>(0, 1) = -0.010965;
+		returnH.at<double>(0, 2) = -26.07;
+		returnH.at<double>(1, 0) = -0.13602;
+		returnH.at<double>(1, 1) = 0.83489;
+		returnH.at<double>(1, 2) = 103.19;
+		returnH.at<double>(2, 0) = -0.00023352;
+		returnH.at<double>(2, 1) = -1.5615e-05;
+		returnH.at<double>(2, 2) = 1.0004;
+	}
+	return returnH;
+}
+
+cv::Mat directLinearTransform(
+	std::vector<cv::Point2f> sourcePoints, 
+	std::vector<cv::Point2f> destPoints,
+	std::vector<unsigned char> inliers) {
+		cv::Mat A(2*sourcePoints.size(), 9, CV_64F);
+		cv::Mat h(9, 1, CV_64F);
+		cv::Mat h3(3, 3, CV_64F);
+
+		// fill in A.
+		for (int n = 0; n < sourcePoints.size(); n++) {
+			// first row.
+			A.at<double>(n*2, 0) = 0;
+			A.at<double>(n*2, 1) = 0;
+			A.at<double>(n*2, 2) = 0;
+			A.at<double>(n*2, 3) = sourcePoints[n].x; // u
+			A.at<double>(n*2, 4) = sourcePoints[n].y; // v
+			A.at<double>(n*2, 5) = 1;
+			A.at<double>(n*2, 6) = -sourcePoints[n].x * destPoints[n].y; // -u * v prime
+			A.at<double>(n*2, 7) = -sourcePoints[n].y * destPoints[n].y; // -v * v prime
+			A.at<double>(n*2, 8) = -destPoints[n].y; // -v prime
+			// second row.
+			A.at<double>(n*2+1, 0) = -sourcePoints[n].x; //- u
+			A.at<double>(n*2+1, 1) = -sourcePoints[n].y; // - v
+			A.at<double>(n*2+1, 2) = -1;
+			A.at<double>(n*2+1, 3) = 0;
+			A.at<double>(n*2+1, 4) = 0;
+			A.at<double>(n*2+1, 5) = 0;
+			A.at<double>(n*2+1, 6) = sourcePoints[n].x * destPoints[n].x; // u * u prime
+			A.at<double>(n*2+1, 7) = sourcePoints[n].y * destPoints[n].x; // v * u prime
+			A.at<double>(n*2+1, 8) = destPoints[n].x; // u prime
+		}
+
+		cv::SVD::solveZ(A, h);
+		// reshape
+		for (int u = 0; u < h3.rows; u++) {
+			for(int v = 0; v < h3.cols; v++) {
+				h3.at<double>(u, v) = h.at<double>((u*3) + v);
+			}
+		}
+		return h3;
+}
+
+cv::Mat normalisedDLT(
+	std::vector<cv::Point2f> sourcePoints, 
+	std::vector<cv::Point2f> destPoints,
+	std::vector<unsigned char> inliers) {		
+		//Average Points.
+		cv::Point2f avSource, avDest;
+		
+		// Calcluate average points.
+		for (int i = 0; i < sourcePoints.size(); i++) {
+			avSource += sourcePoints[i];
+			avDest += destPoints[i];
+		}
+		avSource.x /= sourcePoints.size();
+		avSource.y /= sourcePoints.size();
+		avDest.x /= destPoints.size();
+		avDest.y /= destPoints.size();
+		
+		// create translation matrices.
+		cv::Mat trans(3, 3, CV_64F);
+		cv::Mat transPrime(3, 3, CV_64F);
+		trans.at<double>(0, 0) = 1;
+		trans.at<double>(0, 1) = 0;
+		trans.at<double>(0, 2) = -avSource.x;
+		trans.at<double>(1, 0) = 0;
+		trans.at<double>(1, 1) = 1;
+		trans.at<double>(1, 2) = -avSource.y;
+		trans.at<double>(2, 0) = 0;
+		trans.at<double>(2, 1) = 0;
+		trans.at<double>(2, 2) = 1;
+
+		transPrime.at<double>(0, 0) = 1;
+		transPrime.at<double>(0, 1) = 0;
+		transPrime.at<double>(0, 2) = -avDest.x;
+		transPrime.at<double>(1, 0) = 0;
+		transPrime.at<double>(1, 1) = 1;
+		transPrime.at<double>(1, 2) = -avDest.y;
+		transPrime.at<double>(2, 0) = 0;
+		transPrime.at<double>(2, 1) = 0;
+		transPrime.at<double>(2, 2) = 1;
+
+		// Calcluate scales.
+		double scale, scalePrime, length, lengthPrime;
+		for (int i = 0; i < sourcePoints.size(); i++) {
+			length += cv::norm(sourcePoints[i] - avSource);
+			lengthPrime += cv::norm(destPoints[i] - avDest);
+		}
+		length /= sourcePoints.size();
+		lengthPrime /= destPoints.size();
+		scale = std::sqrt(2) / length;
+		scalePrime = std::sqrt(2) / lengthPrime;
+
+		// Create scale matrices.
+		cv::Mat scaleMatrix(3, 3, CV_64F);
+		cv::Mat scalePrimeMatrix(3, 3, CV_64F);
+		scaleMatrix.at<double>(0, 0) = scale;
+		scaleMatrix.at<double>(0, 1) = 0;
+		scaleMatrix.at<double>(0, 2) = 0;
+		scaleMatrix.at<double>(1, 0) = 0;
+		scaleMatrix.at<double>(1, 1) = scale;
+		scaleMatrix.at<double>(1, 2) = 0;
+		scaleMatrix.at<double>(2, 0) = 0;
+		scaleMatrix.at<double>(2, 1) = 0;
+		scaleMatrix.at<double>(2, 2) = 1;
+
+		scalePrimeMatrix.at<double>(0, 0) = scalePrime;
+		scalePrimeMatrix.at<double>(0, 1) = 0;
+		scalePrimeMatrix.at<double>(0, 2) = 0;
+		scalePrimeMatrix.at<double>(1, 0) = 0;
+		scalePrimeMatrix.at<double>(1, 1) = scalePrime;
+		scalePrimeMatrix.at<double>(1, 2) = 0;
+		scalePrimeMatrix.at<double>(2, 0) = 0;
+		scalePrimeMatrix.at<double>(2, 1) = 0;
+		scalePrimeMatrix.at<double>(2, 2) = 1;
+
+		//Calculate the transform matrices.
+		cv::Mat T(3, 3, CV_64F);
+		cv::Mat Tprime(3, 3, CV_64F);
+		T = scaleMatrix * trans;
+		Tprime = scalePrimeMatrix * transPrime;
+		//Normalise the points
+		std::vector<cv::Point2f> nrmlSourcePoints, nrmlDestPoints;
+		cv::perspectiveTransform(sourcePoints, nrmlSourcePoints, T);
+		cv::perspectiveTransform(destPoints, nrmlDestPoints, Tprime);
+
+		// Normalised answer.
+		cv::Mat HTilde = directLinearTransform(nrmlSourcePoints, nrmlDestPoints, inliers);
+		return Tprime.inv() * HTilde * T;
+}
+
 int main() {
+
+	int testOption = 1;
 
 	// Read in two images and display them on screen
 	
-	cv::Mat image1 = cv::imread("../image1.jpg");
-	cv::Mat image2 = cv::imread("../image2.jpg");
+	// Example Image.
+	// cv::Mat image1 = cv::imread("../image1.jpg");
+	// cv::Mat image2 = cv::imread("../image2.jpg");
+
+	// Abstract Image
+	// MIT License
+	cv::Mat image1 = getTestImage1(testOption);
+	cv::Mat image2 = getTestImage2(testOption);
+
+	cv::Mat trueH = getTrueH(testOption);
+
 
 	cv::namedWindow("Display 1");
 	cv::namedWindow("Display 2");
@@ -47,6 +221,42 @@ int main() {
 		}
 	}
 
+	// Test points.
+	// std::vector<cv::Point2f> source, destination;
+
+	// source.push_back(cv::Point2f(0, 0));
+	// source.push_back(cv::Point2f(0, 1));
+	// source.push_back(cv::Point2f(1, 0));
+	// source.push_back(cv::Point2f(1, 1));
+
+	// cv::Mat trueHtrans(3, 3, CV_64F);
+	// trueHtrans.at<double>(0, 0) = 1;
+	// trueHtrans.at<double>(0, 1) = 0;
+	// trueHtrans.at<double>(0, 2) = 4; // delta u
+	// trueHtrans.at<double>(1, 0) = 0;
+	// trueHtrans.at<double>(1, 1) = 1;
+	// trueHtrans.at<double>(1, 2) = 5; // delta v
+	// trueHtrans.at<double>(2, 0) = 0;
+	// trueHtrans.at<double>(2, 1) = 0;
+	// trueHtrans.at<double>(2, 2) = 1;
+
+	// cv::Mat trueHrotate(3, 3, CV_64F);
+	// trueHrotate.at<double>(0, 0) = std::cos(45); // cos 45
+	// trueHrotate.at<double>(0, 1) = -std::sin(45); // -sin 45
+	// trueHrotate.at<double>(0, 2) = 0;
+	// trueHrotate.at<double>(1, 0) = std::sin(45); // sin 45
+	// trueHrotate.at<double>(1, 1) = std::cos(45); // cos 45
+	// trueHrotate.at<double>(1, 2) = 0;
+	// trueHrotate.at<double>(2, 0) = 0;
+	// trueHrotate.at<double>(2, 1) = 0;
+	// trueHrotate.at<double>(2, 2) = 1;
+
+	// cv::Mat trueH = trueHtrans * trueHrotate;
+
+	// cv::perspectiveTransform(source, destination, trueH);
+
+	std::cout << "trueH = " << trueH << std::endl;
+
 	// Compute the homgraphy
 
 	/**********************************************************
@@ -55,12 +265,23 @@ int main() {
 	Timer timer;
 	std::vector<unsigned char> inliers;
 	timer.reset();
-	cv::Mat H = cv::findHomography(goodPoints2, goodPoints1, inliers, cv::RANSAC, 3.0);
-	double elapsedTime = timer.read();
+	// cv::Mat H = cv::findHomography(goodPoints2, goodPoints1, inliers, cv::RANSAC, 3.0);
 
+
+	// cv::Mat H = directLinearTransform(goodPoints2, goodPoints1, inliers); //image calculation
+	// cv::Mat H = directLinearTransform(source, destination, inliers); // My testing calculation
+
+	// cv::Mat H = normalisedDLT(source, destination, inliers);
+	cv::Mat H = normalisedDLT(goodPoints2, goodPoints1, inliers);
+
+	double elapsedTime = timer.read();
+	// We know there is always a 1 in the 3,3 position of the matrix.
+	std::cout << "H / k = " << H / H.at<double>(2, 2) << std::endl;
 	std::cout << "Homography estimation took " << elapsedTime << " seconds" << std::endl;
 
 	// Figure out the extent of the final mosaic
+
+	// TODO uncomment below.
 
 	std::vector<cv::Point2d> corners;
 	corners.push_back(cv::Point2d(0, 0));
