@@ -196,7 +196,7 @@ cv::Mat getNormaliseMatrix(std::vector<cv::Point2f> inputPoints) {
 	return scaleMatrix * trans;
 }
 
-double MSE(std::vector<cv::Point2f> sourcePoints, std::vector<cv::Point2f> destPoints, cv::Mat estH, cv::Mat trueH) {
+double RPE(std::vector<cv::Point2f> sourcePoints, std::vector<cv::Point2f> destPoints, cv::Mat estH, cv::Mat trueH) {
 	std::vector<cv::Point2f> nrmlSourcePoints, nrmlDestPoints, estimatedDest, estimatedSource, trueDest, trueSource;
 	cv::Mat scaledEstH, ScaledTrueH;
 
@@ -353,7 +353,7 @@ int main() {
 	cv::Mat H = normalisedRANSAC(goodPoints2, goodPoints1, 0.2);
 
 	double elapsedTime = timer.read();
-	std::cout << "MSE: " << MSE(goodPoints2, goodPoints1, H, trueH) << std::endl;
+	std::cout << "Reprojection Error: " << RPE(goodPoints2, goodPoints1, H, trueH) << std::endl;
 	std::cout << "Homography estimation took " << elapsedTime << " seconds" << std::endl;
 	// Figure out the extent of the final mosaic
 
