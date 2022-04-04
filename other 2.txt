@@ -1,0 +1,289 @@
+Trial #: 1
+RANSAC_threshold: 0.1
+[ INFO:0@0.014] global /home/jordan/vcpkg/buildtrees/opencv4/src/4.5.5-f2b5f31c0d.clean/modules/core/src/parallel/registry_parallel.impl.hpp (96) ParallelBackendRegistry core(parallel): Enabled backends(3, sorted by priority): ONETBB(1000); TBB(990); OPENMP(980)
+RANSAC:
+number of points: 3075
+Inliers: 392
+Iterations: 26152.7
+MSE: 1.71596e+12
+Homography estimation took 4.5 seconds
+Trial #: 1
+RANSAC_threshold: 80
+RANSAC:
+number of points: 3075
+Inliers: 615
+Iterations: 4313.89
+MSE: 5.39212e+11
+Homography estimation took 3.097 seconds
+Trial #: 1
+RANSAC_threshold: 70
+RANSAC:
+number of points: 3075
+Inliers: 272
+Iterations: 112831
+MSE: 7.24645e+10
+Homography estimation took 12.576 seconds
+Trial #: 1
+RANSAC_threshold: 60
+RANSAC:
+number of points: 3075
+Inliers: 274
+Iterations: 109572
+MSE: 1.22414e+11
+Homography estimation took 12.053 seconds
+Trial #: 2
+RANSAC_threshold: 0.1
+RANSAC:
+number of points: 3075
+Inliers: 287
+Iterations: 91027.7
+MSE: 1.27213e+12
+Homography estimation took 10.227 seconds
+Trial #: 2
+RANSAC_threshold: 80
+RANSAC:
+number of points: 3075
+Inliers: 260
+Iterations: 135149
+MSE: 5.74521e+08
+Homography estimation took 15.157 seconds
+Trial #: 2
+RANSAC_threshold: 70
+RANSAC:
+number of points: 3075
+Inliers: 399
+Iterations: 24364.9
+MSE: 3.1642e+06
+Homography estimation took 2.627 seconds
+Trial #: 2
+RANSAC_threshold: 60
+RANSAC:
+number of points: 3075
+Inliers: 282
+Iterations: 97657.5
+MSE: 1.49536e+12
+Homography estimation took 10.926 seconds
+Trial #: 3
+RANSAC_threshold: 0.1
+RANSAC:
+number of points: 3075
+Inliers: 339
+Iterations: 46761.3
+MSE: 6.46456e+10
+Homography estimation took 5.339 seconds
+Trial #: 3
+RANSAC_threshold: 80
+RANSAC:
+number of points: 3075
+Inliers: 604
+Iterations: 4637.1
+MSE: 7.3217e+10
+Homography estimation took 5.537 seconds
+Trial #: 3
+RANSAC_threshold: 70
+RANSAC:
+number of points: 3075
+Inliers: 289
+Iterations: 88533.8
+MSE: 3.19905e+11
+Homography estimation took 21.45 seconds
+Trial #: 3
+RANSAC_threshold: 60
+RANSAC:
+number of points: 3075
+Inliers: 336
+Iterations: 48454
+MSE: 1.62894e+07
+Homography estimation took 13.903 seconds
+Trial #: 1
+RANSAC_threshold: 0.1
+RANSAC:
+number of points: 2011
+Inliers: 256
+Iterations: 26300.8
+MSE: 1.71774e+12
+Homography estimation took 2.055 seconds
+Trial #: 1
+RANSAC_threshold: 80
+RANSAC:
+number of points: 2011
+Inliers: 196
+Iterations: 76549.3
+MSE: 2.28241e+10
+Homography estimation took 9.372 seconds
+Trial #: 1
+RANSAC_threshold: 70
+RANSAC:
+number of points: 2011
+Inliers: 191
+Iterations: 84885.6
+MSE: 2.35734e+12
+Homography estimation took 6.959 seconds
+Trial #: 1
+RANSAC_threshold: 60
+RANSAC:
+number of points: 2011
+Inliers: 190
+Iterations: 86686.9
+MSE: 5.35266e+10
+Homography estimation took 7.088 seconds
+Trial #: 2
+RANSAC_threshold: 0.1
+RANSAC:
+number of points: 2011
+Inliers: 218
+Iterations: 50018.3
+MSE: 2.38547e+10
+Homography estimation took 4.133 seconds
+Trial #: 2
+RANSAC_threshold: 80
+RANSAC:
+number of points: 2011
+Inliers: 219
+Iterations: 49110.9
+MSE: 5.57611e+10
+Homography estimation took 4.026 seconds
+Trial #: 2
+RANSAC_threshold: 70
+RANSAC:
+number of points: 2011
+Inliers: 206
+Iterations: 62732.5
+MSE: 2.18361e+11
+Homography estimation took 5.141 seconds
+Trial #: 2
+RANSAC_threshold: 60
+RANSAC:
+number of points: 2011
+Inliers: 266
+Iterations: 22562.8
+MSE: 2.29126e+12
+Homography estimation took 5.163 seconds
+Trial #: 3
+RANSAC_threshold: 0.1
+RANSAC:
+number of points: 2011
+Inliers: 257
+Iterations: 25893.7
+MSE: 5.24281e+09
+Homography estimation took 2.16 seconds
+Trial #: 3
+RANSAC_threshold: 80
+RANSAC:
+number of points: 2011
+Inliers: 259
+Iterations: 25103
+MSE: 3.56954e+10
+Homography estimation took 2.011 seconds
+Trial #: 3
+RANSAC_threshold: 70
+RANSAC:
+number of points: 2011
+Inliers: 241
+Iterations: 33486.7
+MSE: 6.55697e+10
+Homography estimation took 2.729 seconds
+Trial #: 3
+RANSAC_threshold: 60
+RANSAC:
+number of points: 2011
+Inliers: 203
+Iterations: 66524
+MSE: 3.21773e+10
+Homography estimation took 8.833 seconds
+Trial #: 1
+RANSAC_threshold: 0.1
+RANSAC:
+number of points: 2104
+Inliers: 215
+Iterations: 63349.4
+MSE: 5.62043e+10
+Homography estimation took 6.883 seconds
+Trial #: 1
+RANSAC_threshold: 80
+RANSAC:
+number of points: 2104
+Inliers: 187
+Iterations: 110698
+MSE: 9.32414e+07
+Homography estimation took 9.156 seconds
+Trial #: 1
+RANSAC_threshold: 70
+RANSAC:
+number of points: 2104
+Inliers: 323
+Iterations: 12433.4
+MSE: 1.13698e+11
+Homography estimation took 3.962 seconds
+Trial #: 1
+RANSAC_threshold: 60
+RANSAC:
+number of points: 2104
+Inliers: 440
+Iterations: 3608.22
+MSE: 862817
+Homography estimation took 0.295 seconds
+Trial #: 2
+RANSAC_threshold: 0.1
+RANSAC:
+number of points: 2104
+Inliers: 211
+Iterations: 68291.7
+MSE: 2.04462e+09
+Homography estimation took 5.568 seconds
+Trial #: 2
+RANSAC_threshold: 80
+RANSAC:
+number of points: 2104
+Inliers: 191
+Iterations: 101712
+MSE: 1.08297e+13
+Homography estimation took 8.416 seconds
+Trial #: 2
+RANSAC_threshold: 70
+RANSAC:
+number of points: 2104
+Inliers: 212
+Iterations: 67012.2
+MSE: 2.43495e+09
+Homography estimation took 5.487 seconds
+Trial #: 2
+RANSAC_threshold: 60
+RANSAC:
+number of points: 2104
+Inliers: 238
+Iterations: 42186.8
+MSE: 9.46608e+12
+Homography estimation took 3.387 seconds
+Trial #: 3
+RANSAC_threshold: 0.1
+RANSAC:
+number of points: 2104
+Inliers: 306
+Iterations: 15436.1
+MSE: 1.27757e+12
+Homography estimation took 7.749 seconds
+Trial #: 3
+RANSAC_threshold: 80
+RANSAC:
+number of points: 2104
+Inliers: 222
+Iterations: 55729
+MSE: 1.58893e+12
+Homography estimation took 6.011 seconds
+Trial #: 3
+RANSAC_threshold: 70
+RANSAC:
+number of points: 2104
+Inliers: 218
+Iterations: 59933.4
+MSE: 1.0278e+15
+Homography estimation took 5.103 seconds
+Trial #: 3
+RANSAC_threshold: 60
+RANSAC:
+number of points: 2104
+Inliers: 190
+Iterations: 103870
+MSE: 9.73021e+11
+Homography estimation took 8.713 seconds

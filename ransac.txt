@@ -1,0 +1,265 @@
+Trial #: 1
+RANSAC_threshold: 90
+RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 353
+MSE: 1.24936e+13
+Homography estimation took 12.386 seconds
+Trial #: 1
+RANSAC_threshold: 80
+RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 251
+MSE: 4.68129e+10
+Homography estimation took 16.516 seconds
+Trial #: 1
+RANSAC_threshold: 70
+RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 249
+MSE: 2.05343e+11
+Homography estimation took 17.147 seconds
+Trial #: 1
+RANSAC_threshold: 60
+RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 190
+MSE: 1.11889e+09
+Homography estimation took 50.201 seconds
+Trial #: 2
+RANSAC_threshold: 90
+RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 295
+MSE: 5.11456e+10
+Homography estimation took 11.298 seconds
+Trial #: 2
+RANSAC_threshold: 80
+RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 248
+MSE: 1.08718e+12
+Homography estimation took 17.286 seconds
+Trial #: 2
+RANSAC_threshold: 70
+RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 221
+MSE: 7.20086e+11
+Homography estimation took 27.512 seconds
+Trial #: 2
+RANSAC_threshold: 60
+RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 223
+MSE: 2.11119e+10
+Homography estimation took 26.818 seconds
+Trial #: 3
+RANSAC_threshold: 90
+RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 312
+MSE: 8.839e+11
+Homography estimation took 6.943 seconds
+Trial #: 3
+RANSAC_threshold: 80
+RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 240
+MSE: 7.96048e+12
+Homography estimation took 24.725 seconds
+Trial #: 3
+RANSAC_threshold: 70
+RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 268
+MSE: 3.29374e+11
+Homography estimation took 13.12 seconds
+Trial #: 3
+RANSAC_threshold: 60
+RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 323
+MSE: 1.07261e+14
+Homography estimation took 31.299 seconds
+Trial #: 1
+RANSAC_threshold: 90
+RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 314
+MSE: 83.4403
+Homography estimation took 3.983 seconds
+Trial #: 1
+RANSAC_threshold: 80
+RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 202
+MSE: 670.207
+Homography estimation took 14.234 seconds
+Trial #: 1
+RANSAC_threshold: 70
+RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 167
+MSE: 2.98972e+12
+Homography estimation took 11.658 seconds
+Trial #: 1
+RANSAC_threshold: 60
+RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 171
+MSE: 8.47026e+08
+Homography estimation took 10.58 seconds
+Trial #: 2
+RANSAC_threshold: 90
+RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 190
+MSE: 1130.1
+Homography estimation took 6.796 seconds
+Trial #: 2
+RANSAC_threshold: 80
+RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 175
+MSE: 920.218
+Homography estimation took 9.413 seconds
+Trial #: 2
+RANSAC_threshold: 70
+RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 171
+MSE: 44433.2
+Homography estimation took 10.339 seconds
+Trial #: 2
+RANSAC_threshold: 60
+RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 190
+MSE: 2.17868e+11
+Homography estimation took 10.941 seconds
+Trial #: 3
+RANSAC_threshold: 90
+RANSAC:
+number of inliers / number of points: 4 / 2011
+number of iterations: 27570.8
+Inliers: 253
+MSE: 5.77052e+11
+Homography estimation took 5.368 seconds
+Trial #: 3
+RANSAC_threshold: 80
+RANSAC:
+number of inliers / number of points: 4 / 2011
+number of iterations: 84885.6
+Inliers: 191
+MSE: 6994.43
+Homography estimation took 6.653 seconds
+Trial #: 3
+RANSAC_threshold: 70
+RANSAC:
+number of inliers / number of points: 4 / 2011
+number of iterations: 49110.9
+Inliers: 219
+MSE: 4.68546e+09
+Homography estimation took 4.879 seconds
+Trial #: 3
+RANSAC_threshold: 60
+RANSAC:
+number of inliers / number of points: 4 / 2011
+number of iterations: 285827
+Inliers: 141
+MSE: 5269.48
+Homography estimation took 27.396 seconds
+Trial #: 1
+RANSAC_threshold: 90
+RANSAC:
+number of inliers / number of points: 4 / 2104
+number of iterations: 144330
+Inliers: 175
+MSE: 1.55549e+13
+Homography estimation took 11.561 seconds
+Trial #: 1
+RANSAC_threshold: 80
+RANSAC:
+number of inliers / number of points: 4 / 2104
+number of iterations: 123374
+Inliers: 182
+MSE: 8.55115e+13
+Homography estimation took 9.903 seconds
+Trial #: 1
+RANSAC_threshold: 70
+RANSAC:
+number of inliers / number of points: 4 / 2104
+number of iterations: 162075
+Inliers: 170
+MSE: 2.46046e+10
+Homography estimation took 14.857 seconds
+Trial #: 1
+RANSAC_threshold: 60
+RANSAC:
+number of inliers / number of points: 4 / 2104
+number of iterations: 211799
+Inliers: 159
+MSE: 2.57292e+12
+Homography estimation took 16.889 seconds
+Trial #: 2
+RANSAC_threshold: 90
+RANSAC:
+number of inliers / number of points: 4 / 2104
+number of iterations: 91723.2
+Inliers: 196
+MSE: 1.71399e+08
+Homography estimation took 7.371 seconds
+Trial #: 2
+RANSAC_threshold: 80
+RANSAC:
+number of inliers / number of points: 4 / 2104
+number of iterations: 165945
+Inliers: 169
+MSE: 2.83994e+11
+Homography estimation took 17.357 seconds
+Trial #: 2
+RANSAC_threshold: 70
+RANSAC:
+number of inliers / number of points: 4 / 2104
+number of iterations: 332937
+Inliers: 142
+MSE: 3.16964e+15
+Homography estimation took 26.651 seconds
+Trial #: 2
+RANSAC_threshold: 60
+RANSAC:
+number of inliers / number of points: 4 / 2104
+number of iterations: 247029
+Inliers: 153
+MSE: 3.77386e+11
+Homography estimation took 19.748 seconds
+Trial #: 3
+RANSAC_threshold: 90
+RANSAC:
+number of inliers / number of points: 4 / 2104
+number of iterations: 67012.2
+Inliers: 212
+MSE: 4.32694e+11
+Homography estimation took 5.412 seconds
+Trial #: 3
+RANSAC_threshold: 80
+RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 284
+MSE: 3.36277e+12
+Homography estimation took 8.231 seconds
+Trial #: 3
+RANSAC_threshold: 70
+RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 163
+MSE: 1.0077e+13
+Homography estimation took 15.37 seconds
+Trial #: 3
+RANSAC_threshold: 60
+RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 183
+MSE: 3.27055e+07
+Homography estimation took 23.039 seconds

@@ -1,0 +1,72 @@
+Trial #1
+Direct Linear Transform:
+MSE: 8.06187e+11
+Homography estimation took 0.005 seconds
+Trial #2
+Direct Linear Transform:
+MSE: 8.06187e+11
+Homography estimation took 0.005 seconds
+Trial #3
+Direct Linear Transform:
+MSE: 8.06187e+11
+Homography estimation took 0.005 seconds
+Trial #1
+Normalised DLT:
+MSE: 3.9691e+06
+Homography estimation took 0.006 seconds
+Trial #2
+Normalised DLT:
+MSE: 3.9691e+06
+Homography estimation took 0.006 seconds
+Trial #3
+Normalised DLT:
+MSE: 3.9691e+06
+Homography estimation took 0.006 seconds
+Trial #1
+Direct Linear Transform:
+MSE: 6.71197e+11
+Homography estimation took 0.003 seconds
+Trial #2
+Direct Linear Transform:
+MSE: 6.71197e+11
+Homography estimation took 0.003 seconds
+Trial #3
+Direct Linear Transform:
+MSE: 6.71197e+11
+Homography estimation took 0.003 seconds
+Trial #1
+Normalised DLT:
+MSE: 2.29381e+06
+Homography estimation took 0.004 seconds
+Trial #2
+Normalised DLT:
+MSE: 2.29381e+06
+Homography estimation took 0.004 seconds
+Trial #3
+Normalised DLT:
+MSE: 2.29381e+06
+Homography estimation took 0.004 seconds
+Trial #1
+Direct Linear Transform:
+MSE: 1.907e+11
+Homography estimation took 0.003 seconds
+Trial #2
+Direct Linear Transform:
+MSE: 1.907e+11
+Homography estimation took 0.003 seconds
+Trial #3
+Direct Linear Transform:
+MSE: 1.907e+11
+Homography estimation took 0.003 seconds
+Trial #1
+Normalised DLT:
+MSE: 1.63531e+06
+Homography estimation took 0.005 seconds
+Trial #2
+Normalised DLT:
+MSE: 1.63531e+06
+Homography estimation took 0.005 seconds
+Trial #3
+Normalised DLT:
+MSE: 1.63531e+06
+Homography estimation took 0.005 seconds

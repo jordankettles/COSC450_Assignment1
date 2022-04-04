@@ -3,34 +3,95 @@
 #include "Timer.h"
 #include "cmath"
 
-double RSS(std::vector<cv::Point2f> sourcePoints, cv::Mat estH, cv::Mat trueH) {
-	std::vector<cv::Point2f> estPoints, truePoints;
-	cv::perspectiveTransform(sourcePoints, estPoints, estH);
-	cv::perspectiveTransform(sourcePoints, truePoints, trueH);
-	double rss;
-	for (int i = 0; i < sourcePoints.size(); i++) {
-		rss += pow(cv::norm(estPoints[i] - truePoints[i]), 2);
-	}
-	return rss;
-}
-
-cv::Mat imageGenerator(cv::Mat img1, cv::Mat H) {
+cv::Mat imageGenerator(cv::Mat img1, cv::Mat H, double percent) {
+	int height = (int) img1.rows * percent;
+	int width = (int) img1.cols * percent;
 	cv::Mat img2(img1.rows, img1.cols, CV_8UC3);
-	cv::warpPerspective(img1, img2, H, img2.size(), cv::INTER_LINEAR, cv::BORDER_TRANSPARENT);
+	cv::Mat largerCrop(img1.rows, img1.cols, CV_8UC3);
+	cv::Mat croppedimage = img1(cv::Range(img1.rows - height, img1.rows), cv::Range(img1.cols - width, img1.cols));
+	cv::resize(croppedimage, largerCrop, img1.size());
+	// Crop image here.
+	cv::warpPerspective(largerCrop, img2, H, img1.size(), cv::INTER_LINEAR, cv::BORDER_TRANSPARENT);
 	return img2;
 }
 
-cv::Mat getTestImage(int option) {
+cv::Mat getTestImage1(int option) {
 	cv::Mat returnImage;
 	//Image given in example folder.
 	if (option == 1) {
-		returnImage = cv::imread("../image1.jpg");
+		returnImage = cv::imread("../testimages/testimage1.jpg");
+	}
+	if (option == 2) {
+		returnImage = cv::imread("../testimages/testimage2.jpg");
+	}
+	if (option == 3) {
+		returnImage = cv::imread("../testimages/testimage3.jpg");
 	}
 	return returnImage;
 }
 
+cv::Mat getHomography(int option) {
+	cv::Mat H(3, 3, CV_64F);
+	// Fridge
+	if (option == 1) {
+		H.at<double>(0, 0) = 1.005231550598348;
+		H.at<double>(0, 1) = -0.001754330803839498;
+		H.at<double>(0, 2) = 0.003508661608419048;
+		H.at<double>(1, 0) = 0.004643058170193042;
+		H.at<double>(1, 1) = 1.002900564761766;
+		H.at<double>(1, 2) = -2.00580112952328;
+		H.at<double>(2, 0) = 1.211007082951835e-05;
+		H.at<double>(2, 1) = -4.060950934818833e-06;
+		H.at<double>(2, 2) = 1.00000812190187;
+	}
+	// Dundas Street
+	else if (option == 2) {
+		H.at<double>(0, 0) = 1.007576066480183;
+		H.at<double>(0, 1) = 0.00351684490917723;
+		H.at<double>(0, 2) = -2.018668977868777;
+		H.at<double>(1, 0) = -0.002359637216448551;
+		H.at<double>(1, 1) = 1.009924728639805;
+		H.at<double>(1, 2) = -1.005205454206651;
+		H.at<double>(2, 0) = -4.096592389670027e-06;
+		H.at<double>(2, 1) = 8.140844697163744e-06;
+		H.at<double>(2, 2) = 1.000000052340082;
+	}
+	// Mural
+	else if (option == 3) {
+		H.at<double>(0, 0) = 0.9999999999999933;
+		H.at<double>(0, 1) = -0.003484320557494391;
+		H.at<double>(0, 2) = 0.006968641115726214;
+		H.at<double>(1, 0) = -6.69588841507594e-16;
+		H.at<double>(1, 1) = 0.996515679442499;
+		H.at<double>(1, 2) = -1.99303135888475;
+		H.at<double>(2, 0) = -3.815801005221341e-18;
+		H.at<double>(2, 1) = -1.209833526908025e-05;
+		H.at<double>(2, 2) = 1.000024196670538;
+	}
+	
+
+	// Create translation matrix.
+	cv::Mat trans(3, 3, CV_64F);
+	trans.at<double>(0, 0) = 1;
+	trans.at<double>(0, 1) = 0;
+	trans.at<double>(0, 2) = -400;
+	trans.at<double>(1, 0) = 0;
+	trans.at<double>(1, 1) = 1;
+	trans.at<double>(1, 2) = 0;
+	trans.at<double>(2, 0) = 0;
+	trans.at<double>(2, 1) = 0;
+	trans.at<double>(2, 2) = 1;
+
+
+	
+	return H * trans;
+}
+
 /**
  * Don't make the step larger than the size of the first image.
+ * These were the inputs used to generate the homographies.
+ * double percent = 0.48;
+ * cv::Mat trueH = generateHomography((int) image1.rows * percent, (int) image1.cols * percent, 3);
  */
 cv::Mat generateHomography(int rows, int cols, int step) {
 	srand(time(0));
@@ -45,10 +106,11 @@ cv::Mat generateHomography(int rows, int cols, int step) {
 	warpedPoints.push_back(cv::Point2f(rows - (rand() % step), cols - (rand() % step)));
 
 	cv::Mat H = cv::getPerspectiveTransform(points, warpedPoints, cv::INTER_LINEAR);
+
 	return H.inv();
 }
 
-cv::Mat directLinearTransform(std::vector<cv::Point2f> sourcePoints, std::vector<cv::Point2f> destPoints, std::vector<unsigned char> inliers) {
+cv::Mat directLinearTransform(std::vector<cv::Point2f> sourcePoints, std::vector<cv::Point2f> destPoints) {
 	cv::Mat A(2*sourcePoints.size(), 9, CV_64F);
 	cv::Mat h(9, 1, CV_64F);
 	cv::Mat h3(3, 3, CV_64F);
@@ -134,7 +196,27 @@ cv::Mat getNormaliseMatrix(std::vector<cv::Point2f> inputPoints) {
 	return scaleMatrix * trans;
 }
 
-cv::Mat normalisedDLT(std::vector<cv::Point2f> sourcePoints, std::vector<cv::Point2f> destPoints, std::vector<unsigned char> inliers) {
+double MSE(std::vector<cv::Point2f> sourcePoints, std::vector<cv::Point2f> destPoints, cv::Mat estH, cv::Mat trueH) {
+	std::vector<cv::Point2f> nrmlSourcePoints, nrmlDestPoints, estimatedDest, estimatedSource, trueDest, trueSource;
+	cv::Mat scaledEstH, ScaledTrueH;
+
+	// Scale the matrices to align the last element with 1. 
+	scaledEstH = estH / estH.at<double>(2,2);
+	ScaledTrueH = trueH / trueH.at<double>(2,2);
+
+	cv::perspectiveTransform(sourcePoints, estimatedDest, scaledEstH);
+	cv::perspectiveTransform(sourcePoints, trueDest, ScaledTrueH.inv());
+	cv::perspectiveTransform(destPoints, estimatedSource, scaledEstH.inv());
+	cv::perspectiveTransform(destPoints, trueSource, ScaledTrueH);
+
+	double distance = 0.0;
+	for (int point = 0; point < sourcePoints.size(); point++) {
+			distance += pow(cv::norm(trueDest[point] - estimatedDest[point]), 2) + pow(cv::norm(trueSource[point] - estimatedSource[point]), 2);
+	}
+	return distance;
+}
+
+cv::Mat normalisedDLT(std::vector<cv::Point2f> sourcePoints, std::vector<cv::Point2f> destPoints) {
 		//Calculate the transform matrix.
 		cv::Mat T = getNormaliseMatrix(sourcePoints);
 		cv::Mat Tprime = getNormaliseMatrix(destPoints);
@@ -145,18 +227,16 @@ cv::Mat normalisedDLT(std::vector<cv::Point2f> sourcePoints, std::vector<cv::Poi
 		cv::perspectiveTransform(destPoints, nrmlDestPoints, Tprime);
 
 		// Normalised answer.
-		cv::Mat HTilde = directLinearTransform(nrmlSourcePoints, nrmlDestPoints, inliers);
+		cv::Mat HTilde = directLinearTransform(nrmlSourcePoints, nrmlDestPoints);
 		return Tprime.inv() * HTilde * T;
 }
 
 double getIterations(int numInliers, int numPoints, double p) {
 	double phi = (double)numInliers / (double)numPoints;
-	std::cout << "number of inliers / number of points: " << numInliers << " / " << numPoints << std::endl;
-	std::cout << "number of iterations: " << std::log(p) / std::log(1.0 - pow(phi, 4)) << std::endl;
 	return std::log(p) / std::log(1.0 - pow(phi, 4));
 }
 
-cv::Mat RANSACwithoutNrml(std::vector<cv::Point2f> sourcePoints, std::vector<cv::Point2f> destPoints, std::vector<unsigned char> inliers, double threshold) {
+cv::Mat RANSAC(std::vector<cv::Point2f> sourcePoints, std::vector<cv::Point2f> destPoints, double threshold) {
 	srand(time(0));
 	double p = 0.001; //Choose 0.001
 	// Get the starting iteration value.
@@ -173,7 +253,7 @@ cv::Mat RANSACwithoutNrml(std::vector<cv::Point2f> sourcePoints, std::vector<cv:
 		}
 
 		//Create an estimate homography.
-		cv::Mat estH = directLinearTransform(randomSourceVec, randomDestVec, inliers);
+		cv::Mat estH = directLinearTransform(randomSourceVec, randomDestVec);
 		std::vector<cv::Point2f> est1;
 		cv::perspectiveTransform(sourcePoints, est1, estH);
 		for (int point = 0; point < sourcePoints.size(); point++) { // See which points agree with the homography.
@@ -189,11 +269,14 @@ cv::Mat RANSACwithoutNrml(std::vector<cv::Point2f> sourcePoints, std::vector<cv:
 			maxIter = getIterations(bestSourceInliers.size(), sourcePoints.size(), p); // Update the number of trials.
 		}
 	}
+	std::cout << "number of points: " << sourcePoints.size() << std::endl;
+	std::cout << "Inliers: " << bestSourceInliers.size() << std::endl;
+	std::cout << "Iterations: " << maxIter << std::endl;
 	// Return a DLT on the consenus set.
-	return directLinearTransform(bestSourceInliers, bestDestInliers, inliers);
+	return directLinearTransform(bestSourceInliers, bestDestInliers);
 }
 
-cv::Mat normalisedRANSAC(std::vector<cv::Point2f> sourcePoints, std::vector<cv::Point2f> destPoints, std::vector<unsigned char> inliers, double threshold) {
+cv::Mat normalisedRANSAC(std::vector<cv::Point2f> sourcePoints, std::vector<cv::Point2f> destPoints, double threshold) {
 	//Calculate the transform matrix.
 	cv::Mat T = getNormaliseMatrix(sourcePoints);
 	cv::Mat Tprime = getNormaliseMatrix(destPoints);
@@ -202,56 +285,24 @@ cv::Mat normalisedRANSAC(std::vector<cv::Point2f> sourcePoints, std::vector<cv::
 	std::vector<cv::Point2f> nrmlSourcePoints, nrmlDestPoints;
 	cv::perspectiveTransform(sourcePoints, nrmlSourcePoints, T);
 	cv::perspectiveTransform(destPoints, nrmlDestPoints, Tprime);
-	
-	srand(time(0));
-	double p = 0.001; //Choose 0.001
-	// Get the starting iteration value.
-	double maxIter = getIterations(4, nrmlSourcePoints.size(), p);
 
-	std::vector<cv::Point2f> bestSourceInliers, bestDestInliers;
-	for (int i = 0; i < maxIter; i++) {
-		std::vector<cv::Point2f> randomSourceVec, randomDestVec, inlierSourceVec, inlierDestVec;
-
-		for (int j = 0; j < 4; j++) { //Pick 4 random points.
-			int rNum = rand() % nrmlSourcePoints.size();
-			randomSourceVec.push_back(nrmlSourcePoints[rNum]);
-			randomDestVec.push_back(nrmlDestPoints[rNum]);
-		}
-
-		//Create an estimate homography.
-		cv::Mat estH = directLinearTransform(randomSourceVec, randomDestVec, inliers);
-		std::vector<cv::Point2f> est1;
-		cv::perspectiveTransform(nrmlSourcePoints, est1, estH);
-		for (int point = 0; point < nrmlSourcePoints.size(); point++) { // See which points agree with the homography.
-			double distance = cv::norm(nrmlDestPoints[point] - est1[point]);
-			if (distance < threshold) {
-				inlierSourceVec.push_back(nrmlSourcePoints[point]);
-				inlierDestVec.push_back(nrmlDestPoints[point]);
-			}
-		}
-		if (inlierSourceVec.size() > bestSourceInliers.size()) { // Update the consensus.
-			bestSourceInliers = inlierSourceVec;
-			bestDestInliers = inlierDestVec;
-			maxIter = getIterations(bestSourceInliers.size(), nrmlSourcePoints.size(), p); // Update the number of trials.
-		}
-	}
-	// Calculate normalised answer on the consensus set.
-	cv::Mat HTilde = directLinearTransform(bestSourceInliers, bestDestInliers, inliers);
+	cv::Mat HTilde = RANSAC(nrmlSourcePoints, nrmlDestPoints, threshold);
 	// Return the homography.
 	return Tprime.inv() * HTilde * T;
 }
 
 int main() {
 	// Read in two images and display them on screen
-	
-	// Example Image.
-	cv::Mat image1 = cv::imread("../image1.jpg");
-	cv::Mat image2 = cv::imread("../image2.jpg");
-	
-	// cv::Mat image1 = getTestImage(1);
-	cv::Mat trueH = generateHomography(image1.rows, image1.cols, 250);
-	// cv::Mat image2 = imageGenerator(image1, trueH);
-
+	/** 
+	 * Image choice 1: Image of a fridge.
+	 * Image choice 2: Image of Dundas Street.
+	 * Image choice 3: Image of a mural.
+	 */
+	int image_choice = 2;
+	cv:: Mat trueH = getHomography(image_choice);
+	cv::Mat image1 = getTestImage1(image_choice);
+	cv::Mat image2(image1.rows, image1.cols, CV_8UC3);
+	cv::warpPerspective(image1, image2, trueH, image1.size());
 
 	cv::namedWindow("Display 1");
 	cv::namedWindow("Display 2");
@@ -292,23 +343,18 @@ int main() {
 	}
 
 	// Compute the homgraphy
-
-	/**********************************************************
-	 * This is the bit you need to replace for the assignment *
-	 **********************************************************/
 	Timer timer;
 	std::vector<unsigned char> inliers;
 	timer.reset();
-	// cv::Mat H = cv::findHomography(goodPoints2, goodPoints1, inliers, cv::RANSAC, 3.0);
-	// cv::Mat H = directLinearTransform(goodPoints2, goodPoints1, inliers);
-	// cv::Mat H = normalisedDLT(goodPoints2, goodPoints1, inliers);
-	// cv::Mat H = RANSACwithoutNrml(goodPoints2, goodPoints1, inliers, 35); // 30 - 60ish
-	cv::Mat H = normalisedRANSAC(goodPoints2, goodPoints1, inliers, 0.01); // 0.01 - 0.001
+	// cv::Mat H = cv::findHomography(goodPoints2, goodPoints1, cv::RANSAC, 3.0);
+	// cv::Mat H = directLinearTransform(goodPoints2, goodPoints1);
+	// cv::Mat H = normalisedDLT(goodPoints2, goodPoints1);
+	// cv::Mat H = RANSAC(goodPoints2, goodPoints1, 80);
+	cv::Mat H = normalisedRANSAC(goodPoints2, goodPoints1, 0.2);
 
 	double elapsedTime = timer.read();
-	std::cout << "Residual Square Error " << RSS(goodPoints2, H, trueH) << std::endl;
+	std::cout << "MSE: " << MSE(goodPoints2, goodPoints1, H, trueH) << std::endl;
 	std::cout << "Homography estimation took " << elapsedTime << " seconds" << std::endl;
-
 	// Figure out the extent of the final mosaic
 
 	std::vector<cv::Point2d> corners;
@@ -344,6 +390,7 @@ int main() {
 	cv::namedWindow("Mosaic");
 	cv::imshow("Mosaic", mosaic);
 	cv::waitKey();
+	cv::destroyAllWindows();
 
 	return 0;
 }

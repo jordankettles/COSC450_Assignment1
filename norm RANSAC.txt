@@ -1,0 +1,253 @@
+Trial #: 1
+normalisedRANSAC_threshold: 0.1
+[ INFO:0@0.015] global /home/jordan/vcpkg/buildtrees/opencv4/src/4.5.5-f2b5f31c0d.clean/modules/core/src/parallel/registry_parallel.impl.hpp (96) ParallelBackendRegistry core(parallel): Enabled backends(3, sorted by priority): ONETBB(1000); TBB(990); OPENMP(980)
+Normalised RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 2802
+MSE: 4.9023
+Homography estimation took 0.007 seconds
+Trial #: 1
+normalisedRANSAC_threshold: 0.15
+Normalised RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 2830
+MSE: 15.5262
+Homography estimation took 0.008 seconds
+Trial #: 1
+normalisedRANSAC_threshold: 0.2
+Normalised RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 2837
+MSE: 81.2722
+Homography estimation took 0.008 seconds
+Trial #: 1
+normalisedRANSAC_threshold: 0.25
+Normalised RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 2843
+MSE: 62.954
+Homography estimation took 0.007 seconds
+Trial #: 2
+normalisedRANSAC_threshold: 0.1
+Normalised RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 2802
+MSE: 4.9023
+Homography estimation took 0.007 seconds
+Trial #: 2
+normalisedRANSAC_threshold: 0.15
+Normalised RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 2830
+MSE: 15.5262
+Homography estimation took 0.008 seconds
+Trial #: 2
+normalisedRANSAC_threshold: 0.2
+Normalised RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 2837
+MSE: 81.2722
+Homography estimation took 0.007 seconds
+Trial #: 2
+normalisedRANSAC_threshold: 0.25
+Normalised RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 2843
+MSE: 62.954
+Homography estimation took 0.007 seconds
+Trial #: 3
+normalisedRANSAC_threshold: 0.1
+Normalised RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 2802
+MSE: 4.9023
+Homography estimation took 0.007 seconds
+Trial #: 3
+normalisedRANSAC_threshold: 0.15
+Normalised RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 2830
+MSE: 15.5262
+Homography estimation took 0.007 seconds
+Trial #: 3
+normalisedRANSAC_threshold: 0.2
+Normalised RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 2837
+MSE: 81.2722
+Homography estimation took 0.008 seconds
+Trial #: 3
+normalisedRANSAC_threshold: 0.25
+Normalised RANSAC:
+number of inliers / number of points: 4 / 3075
+Inliers: 2843
+MSE: 62.954
+Homography estimation took 0.007 seconds
+Trial #: 1
+normalisedRANSAC_threshold: 0.1
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 1364
+MSE: 6220.75
+Homography estimation took 0.007 seconds
+Trial #: 1
+normalisedRANSAC_threshold: 0.15
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 1797
+MSE: 135.57
+Homography estimation took 0.004 seconds
+Trial #: 1
+normalisedRANSAC_threshold: 0.2
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 1944
+MSE: 17.9589
+Homography estimation took 0.005 seconds
+Trial #: 1
+normalisedRANSAC_threshold: 0.25
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 1945
+MSE: 134.184
+Homography estimation took 0.004 seconds
+Trial #: 2
+normalisedRANSAC_threshold: 0.1
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 1364
+MSE: 6220.75
+Homography estimation took 0.007 seconds
+Trial #: 2
+normalisedRANSAC_threshold: 0.15
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 1797
+MSE: 135.57
+Homography estimation took 0.004 seconds
+Trial #: 2
+normalisedRANSAC_threshold: 0.2
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 1944
+MSE: 17.9589
+Homography estimation took 0.004 seconds
+Trial #: 2
+normalisedRANSAC_threshold: 0.25
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 1945
+MSE: 134.184
+Homography estimation took 0.004 seconds
+Trial #: 3
+normalisedRANSAC_threshold: 0.1
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 1364
+MSE: 6220.75
+Homography estimation took 0.007 seconds
+Trial #: 3
+normalisedRANSAC_threshold: 0.15
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 1797
+MSE: 135.57
+Homography estimation took 0.004 seconds
+Trial #: 3
+normalisedRANSAC_threshold: 0.2
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 1944
+MSE: 17.9589
+Homography estimation took 0.004 seconds
+Trial #: 3
+normalisedRANSAC_threshold: 0.25
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2011
+Inliers: 1945
+MSE: 134.184
+Homography estimation took 0.004 seconds
+Trial #: 1
+normalisedRANSAC_threshold: 0.1
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 2015
+MSE: 537.168
+Homography estimation took 0.005 seconds
+Trial #: 1
+normalisedRANSAC_threshold: 0.15
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 2022
+MSE: 440.598
+Homography estimation took 0.005 seconds
+Trial #: 1
+normalisedRANSAC_threshold: 0.2
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 2027
+MSE: 496.351
+Homography estimation took 0.005 seconds
+Trial #: 1
+normalisedRANSAC_threshold: 0.25
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 2032
+MSE: 1129.21
+Homography estimation took 0.005 seconds
+Trial #: 2
+normalisedRANSAC_threshold: 0.1
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 2015
+MSE: 537.168
+Homography estimation took 0.005 seconds
+Trial #: 2
+normalisedRANSAC_threshold: 0.15
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 2022
+MSE: 440.598
+Homography estimation took 0.005 seconds
+Trial #: 2
+normalisedRANSAC_threshold: 0.2
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 2027
+MSE: 496.351
+Homography estimation took 0.005 seconds
+Trial #: 2
+normalisedRANSAC_threshold: 0.25
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 2032
+MSE: 1129.21
+Homography estimation took 0.005 seconds
+Trial #: 3
+normalisedRANSAC_threshold: 0.1
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 2015
+MSE: 537.168
+Homography estimation took 0.005 seconds
+Trial #: 3
+normalisedRANSAC_threshold: 0.15
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 2022
+MSE: 440.598
+Homography estimation took 0.005 seconds
+Trial #: 3
+normalisedRANSAC_threshold: 0.2
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 2027
+MSE: 496.351
+Homography estimation took 0.005 seconds
+Trial #: 3
+normalisedRANSAC_threshold: 0.25
+Normalised RANSAC:
+number of inliers / number of points: 4 / 2104
+Inliers: 2032
+MSE: 1129.21
+Homography estimation took 0.005 seconds
